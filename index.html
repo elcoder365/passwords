@@ -182,6 +182,8 @@
             font-size: 1rem;
             flex-grow: 1;
             outline: none;
+            text-align: right;
+            direction: rtl;
         }
         
         .password-container .toggle-btn {
@@ -241,6 +243,8 @@
             border-radius: 0.5rem;
             color: var(--text-color);
             transition: border-color 0.3s;
+            text-align: right;
+            direction: rtl;
         }
 
         .form-group input:focus {
@@ -264,6 +268,7 @@
         .form-actions {
             display: flex;
             gap: 1rem;
+            justify-content: flex-end;
         }
 
         .btn {
@@ -345,12 +350,14 @@
         .search-container input {
             width: 100%;
             padding: 0.75rem 1rem;
-            padding-right: 3rem;
+            padding-left: 3rem;
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 0.75rem;
             color: var(--text-color);
             transition: border-color 0.3s;
+            text-align: right;
+            direction: rtl;
         }
         
         .search-container input:focus {
@@ -360,7 +367,7 @@
         
         .search-container svg {
             position: absolute;
-            right: 15px;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: #94a3b8;
@@ -454,7 +461,7 @@
             content: "";
             height: 26px;
             width: 26px;
-            left: 4px;
+            right: 4px;
             bottom: 4px;
             background-color: white;
             transition: .4s;
@@ -464,7 +471,7 @@
             background-color: var(--accent-color);
         }
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(-26px);
         }
 
         /* Onboarding Styles */
@@ -501,7 +508,7 @@
 <div class="auth-container" id="auth-screen" style="display:none;">
     <div class="form-container" style="width: 100%; max-width: 400px; padding: 2rem;">
         <h2 id="auth-title"></h2>
-        <div id="password-auth-form" style="display: none;">
+        <div id="password-auth-form">
             <div class="form-group">
                 <input type="password" id="auth-password-input" placeholder="كلمة المرور" autofocus>
                 <div class="password-strength-bar" id="auth-password-strength-bar" style="display:none;">
@@ -509,7 +516,6 @@
                 </div>
             </div>
             <button class="btn btn-primary" id="auth-login-btn">تسجيل الدخول</button>
-            <button class="btn btn-secondary" id="change-password-link">تغيير كلمة المرور</button>
         </div>
         <div id="questions-auth-form" style="display: none;">
             <div class="form-group">
@@ -537,7 +543,6 @@
 <!-- Main App (Hidden by default) -->
 <div class="container" id="main-app" style="display: none;">
     <div class="header">
-        <h1>مدير الحسابات</h1>
         <div style="display: flex; gap: 10px;">
              <button class="btn btn-primary" id="settings-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83l-2.83 2.83a2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0l-2.83-2.83a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83l2.83-2.83a2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0l2.83 2.83a2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82z"></path></svg>
@@ -546,37 +551,49 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             </button>
         </div>
+        <h1 id="main-title">مدير كلمات المرور</h1>
     </div>
     
     <div id="settings-panel" class="form-container" style="display: none;">
-        <h2>الإعدادات</h2>
+        <h2 id="settings-title">الإعدادات</h2>
         <div class="switch-container">
-            <span>تفعيل الحماية القصوى (الأسئلة السرية)</span>
+            <span id="max-security-text">تفعيل الحماية القصوى (الأسئلة السرية)</span>
             <label class="switch">
                 <input type="checkbox" id="max-security-toggle">
                 <span class="slider"></span>
             </label>
         </div>
+        <div class="switch-container">
+            <span id="lang-text">اللغة: العربية</span>
+            <button class="btn btn-secondary" id="lang-toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span id="lang-btn-text">English</span>
+            </button>
+        </div>
         <button class="btn btn-secondary" id="change-master-password-btn" style="width: 100%;">تغيير كلمة المرور الأساسية</button>
         <button class="btn btn-secondary" id="export-btn" style="width: 100%; margin-top: 10px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            تصدير الحسابات (JSON)
+            <span id="export-btn-text">تصدير الحسابات (JSON)</span>
         </button>
         <input type="file" id="import-input" style="display:none;" accept=".json" />
         <button class="btn btn-secondary" id="import-btn" style="width: 100%; margin-top: 10px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-            استيراد الحسابات (JSON)
+            <span id="import-btn-text">استيراد الحسابات (JSON)</span>
+        </button>
+        <button class="btn btn-secondary" id="logout-btn" style="width: 100%; margin-top: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span id="logout-btn-text">تسجيل الخروج</span>
         </button>
     </div>
 
     <div id="add-edit-form" class="form-container" style="display: none;">
         <h2 id="form-title">إضافة حساب جديد</h2>
         <div class="form-group">
-            <label for="account-name">اسم الحساب:</label>
+            <label for="account-name" id="account-name-label">اسم الحساب:</label>
             <input type="text" id="account-name" placeholder="مثال: Google">
         </div>
         <div class="form-group">
-            <label for="password-value">كلمة المرور:</label>
+            <label for="password-value" id="password-value-label">كلمة المرور:</label>
             <div style="position: relative;">
                 <input type="password" id="password-value" placeholder="كلمة المرور">
                 <div class="password-strength-bar" id="password-strength-bar"><div></div></div>
@@ -622,12 +639,119 @@ ZXCASDQWE123000/*
         let accounts = [];
         let editingId = null;
         const securityQuestions = [
-            { question: "ما هو اسمك؟", answer: "سيف الدين" },
-            { question: "ما هو حلمك؟", answer: "مهندس كمبيوتر" },
-            { question: "ما هي أول مدرسة لك؟", answer: "الاندلس" }
+            { question: "ما هو اسمك؟", answer: ["سيف الدين", "saif"] },
+            { question: "ما هو حلمك؟", answer: ["مهندس كمبيوتر", "software"] },
+            { question: "ما هي أول مدرسة لك؟", answer: ["الاندلس", "andalusia", "عثمان ابن عفان", "osman ibn aphan", "ريتاج احمد", "retaj ahmed"] }
         ];
         let currentQuestionIndex = 0;
         let authAttempts = 0;
+        let currentLang = localStorage.getItem('lang') || 'ar';
+
+        // --- Translations ---
+        const translations = {
+            ar: {
+                welcome: "أهلاً بك",
+                securePasswordManager: "مدير كلمات المرور الآمن.",
+                startNow: "ابدأ الآن",
+                createMasterPassword: "إنشاء كلمة مرور أساسية",
+                masterPasswordPlaceholder: "أرقام ورموز فقط",
+                login: "تسجيل الدخول",
+                masterPasswordLoginPlaceholder: "كلمة المرور الأساسية",
+                securityCheck: "التحقق من الهوية",
+                next: "التالي",
+                confirm: "تأكيد",
+                wrongPassword: "كلمة المرور غير صحيحة!",
+                wrongAnswer: "الإجابة خاطئة!",
+                maxAttemptsReached: "تم الوصول للحد الأقصى من المحاولات.",
+                masterPasswordInvalid: "كلمة المرور يجب أن تكون أرقام ورموز فقط و لا تقل عن 6 أحرف!",
+                appTitle: "مدير كلمات المرور",
+                settings: "الإعدادات",
+                maxSecurity: "تفعيل الحماية القصوى (الأسئلة السرية)",
+                langText: "اللغة: العربية",
+                langButtonText: "English",
+                changeMasterPassword: "تغيير كلمة المرور الأساسية",
+                exportBtnText: "تصدير الحسابات (JSON)",
+                importBtnText: "استيراد الحسابات (JSON)",
+                logout: "تسجيل الخروج",
+                addAccount: "إضافة حساب جديد",
+                accountName: "اسم الحساب:",
+                passwordValue: "كلمة المرور:",
+                save: "حفظ",
+                cancel: "إلغاء",
+                searchPlaceholder: "البحث عن حساب...",
+                generatePassword: "توليد كلمة مرور قوية",
+                passwordCopied: "تم نسخ كلمة المرور!",
+                accountDeleted: "تم حذف الحساب بنجاح!",
+                primaryAccountWarning: "لا يمكنك حذف الحساب الأساسي.",
+                exportedSuccessfully: "تم تصدير البيانات بنجاح!",
+                importedSuccessfully: "تم استيراد الحسابات بنجاح!",
+                importError: "صيغة الملف غير صحيحة.",
+                fileReadError: "حدث خطأ في قراءة الملف.",
+                confirmTitle: "هل أنت متأكد؟",
+                confirmMessage: "هذا الإجراء لا يمكن التراجع عنه.",
+                confirmOk: "تأكيد",
+                confirmCancel: "إلغاء",
+                noResults: "لا يوجد حسابات تطابق البحث.",
+                editAccount: "تعديل الحساب",
+                strongPasswordGenerated: "تم توليد كلمة مرور قوية!",
+                changePasswordConfirm: "هل أنت متأكد من تغيير كلمة المرور الأساسية؟",
+                logoutConfirm: "هل أنت متأكد من تسجيل الخروج؟",
+                weak: "ضعيفة",
+                medium: "متوسطة",
+                strong: "قوية"
+            },
+            en: {
+                welcome: "Welcome",
+                securePasswordManager: "Secure Password Manager.",
+                startNow: "Start Now",
+                createMasterPassword: "Create Master Password",
+                masterPasswordPlaceholder: "Numbers and symbols only",
+                login: "Login",
+                masterPasswordLoginPlaceholder: "Master Password",
+                securityCheck: "Security Check",
+                next: "Next",
+                confirm: "Confirm",
+                wrongPassword: "Wrong password!",
+                wrongAnswer: "Incorrect answer!",
+                maxAttemptsReached: "Maximum attempts reached.",
+                masterPasswordInvalid: "Password must contain numbers and symbols only, and be at least 6 characters!",
+                appTitle: "Password Manager",
+                settings: "Settings",
+                maxSecurity: "Enable Max Security (Secret Questions)",
+                langText: "Language: English",
+                langButtonText: "العربية",
+                changeMasterPassword: "Change Master Password",
+                exportBtnText: "Export Accounts (JSON)",
+                importBtnText: "Import Accounts (JSON)",
+                logout: "Logout",
+                addAccount: "Add New Account",
+                accountName: "Account Name:",
+                passwordValue: "Password:",
+                save: "Save",
+                cancel: "Cancel",
+                searchPlaceholder: "Search for account...",
+                generatePassword: "Generate Strong Password",
+                passwordCopied: "Password copied!",
+                accountDeleted: "Account deleted successfully!",
+                primaryAccountWarning: "You cannot delete the primary account.",
+                exportedSuccessfully: "Data exported successfully!",
+                importedSuccessfully: "Accounts imported successfully!",
+                importError: "Invalid file format.",
+                fileReadError: "Error reading file.",
+                confirmTitle: "Are you sure?",
+                confirmMessage: "This action cannot be undone.",
+                confirmOk: "Confirm",
+                confirmCancel: "Cancel",
+                noResults: "No accounts match the search.",
+                editAccount: "Edit Account",
+                strongPasswordGenerated: "Strong password generated!",
+                changePasswordConfirm: "Are you sure you want to change the master password?",
+                logoutConfirm: "Are you sure you want to log out?",
+                weak: "Weak",
+                medium: "Medium",
+                strong: "Strong"
+            }
+        };
 
         // --- DOM Elements ---
         const onboardingScreen = document.getElementById('onboarding-screen');
@@ -643,7 +767,6 @@ ZXCASDQWE123000/*
         const questionInput = document.getElementById('question-input');
         const questionsNextBtn = document.getElementById('questions-next-btn');
         const authMessage = document.getElementById('auth-message');
-        const changePasswordLink = document.getElementById('change-password-link');
         const accountListEl = document.getElementById('account-list');
         const addBtn = document.getElementById('add-btn');
         const addEditForm = document.getElementById('add-edit-form');
@@ -663,7 +786,14 @@ ZXCASDQWE123000/*
         const passwordStrengthBar = document.getElementById('password-strength-bar');
         const authPasswordStrengthBar = document.getElementById('auth-password-strength-bar');
         const togglePasswordBtn = document.getElementById('toggle-password-btn');
-        
+        const logoutBtn = document.getElementById('logout-btn');
+        const mainTitle = document.getElementById('main-title');
+        const langToggleBtn = document.getElementById('lang-toggle-btn');
+        const langText = document.getElementById('lang-text');
+        const langBtnText = document.getElementById('lang-btn-text');
+        const onboardingText = onboardingScreen.querySelector('p');
+        const generatePasswordBtn = document.getElementById('generate-password-btn');
+
         // Custom Confirmation Modal
         const confirmModal = document.getElementById('confirm-modal');
         const confirmTitle = document.getElementById('confirm-title');
@@ -672,44 +802,88 @@ ZXCASDQWE123000/*
         const confirmOk = document.getElementById('confirm-ok');
         
         // Sound Effects
-        const successSound = new Audio("data:audio/wav;base64,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");
-        const errorSound = new Audio("data:audio/wav;base64,UklGRl9QDwBXQVZFZm10IBAAAAABAAEARKwAAACuAAACACgABAAgACABpZmVzdHJN5gAAGXIAAHoBAAATAAACAHBlYWtN5wAADgAAANoBAC5lK1BHTU5NNAAgACABWkAAAEMFAABQGgAARgAAAFIKAFsAAAA5AAAAWggAZwAAADEyMgoAdwAARvYKAAB6DAAAZQAAAEEAAACHDAAAfQAAAHEEAIUAAACyBAAAaQAAAPwBAAB7AAAAdwQAAFsBAAA0AAQAOQEAAPoHAADYDAAA9goAANkIAAD2CAAAYgQAABYBAACgCgAA5ggAABgEAAD2BAAAUgQAAAAAAI4AAADGAAAA3wAAAEEAAAB4AQAAzwsAAP4JAACCCgAA0wgAAMYIAACgAQAA2gkAAKIGAAAAAAAAAPQJAAAICgAA5wAAAO4EAAAAAAAAAAACAAAAFgAAANgHAACACgAAAAYAAAAMAgAAxQgAANYHAACQCAAA4AwAAIAGAAAAAAAAAAAAAAAAAAAPAAAAAgIAAAAAAAAAAAAAAAAAAQMAAAAAAAAAwBMAAAAAAPgCAADKAAAAUwsAALAAAAAcBAAAIAoAAEQHAAAAAAAAAAAAAAAAAQAAAAAAAMYAAADcAAAACAAAAAAAAADcAAAABwAAAAMDAAAMBQAA1ggAANcAAAD6AAAACAgAADwEAAAAAAAAAgAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEoAAAC0AQAAKwAAAJEKAAAACwAAJgAAAAYAAAAVAAAAAAcAAAAAgAAAAKAGAAAAAAAAAAAAAAAAAAAAAAA0BAAAoAQAAPgAAAAAAAAAwAQAADwIAAAAAAAAAAAAAAAAAAEQBAAAXAQAAwAUAAAgAAAAdAQAAEQEAAACxAAAABAAAAAAAAADsBAAAJQgAAAAAAAAPAAAAXgAAABAAAAAVAAAALgAAAJwGAAAhCAAAAADqAwAAAgAAACsAAADzBgAAWAAAAE8DAAAAAAAAAAAAAAAAAAAAWgEAAGgEAADfBwAAGgAAACoBAAAhAwAANAAAAAwAAAC6AAAA7gsAAK4JAAAAAAAAAAAUAQAACwAAACsBAACqAQAA+gAAAOYEAABOAAAAwAAAAF0IAADsAgAAAAAAAAABAAAA/QsAAGQDAAAAAAAAAAAABgAAAKoNAAD3CgAASAwAANgAAAB8AQAAjAcAAPMNAAC7DAAAIAcAAAUIAAC4CgAA4gQAAIAAAACIAAAAEwAAANAAAAAeAAAAhAAAAO4DAAAAAQAAABoBAADeAAAAEAAAAEQIAABAAgAAgAAAAEQAAADCAQAAuAAAAKQKAADeAAAAJQAAAFoCAADlAgAATwEAACwAAAARAAAAxQAAAKAEAAA6AgAAqAAAAK4AAAD5AAAAzAUAAP0FAADpBQAAoAgAANoFAADiAgAAJAAAAAoFAADWAgAA4gAAACYAAACOBgAAIgYAAKwBAAAABQAAACsAQAAVAwAAPwNAADaCgAAoAgAABgAAAAAAAAAAPwBAAA2BwAAfAcAAAAAAADSAQAAaAcAAJwIAAD6AQAA0gAAAL4EAAAAAAAAgAkAAKIKAAAADgAAAPgAAAAmAAAARAcAAAAAAMD9BwAAbAgAADoBAAAKAAAAAAAAAADaAQAAMgEAAAAAAAAAAAAAAIAAAAAGAAAAKQAAAHgAAAB8AAAAkAAAAAAAAAAMAAAATgAAAAwAAAAAAAAAyQAAAPQKAAAhAwAA0wAAABQAAAAcAgAA3woAAMcAAACjBwAALAAAAM4AAADeAwAApgsAAJIDAAAACgAAAMYEAABdCAAA3AUAAKQDAADLCAAA0goAAJwIAADzBAAAKAAQAHEKAAASBwAAaAMAAIIBAACuCAAAgAQAADQEAAA1AgAAJwoAAM4JAAB4CAAAzQoAAPAKAAA2AQAAwQgAAEECAADsDAAA0Q0AAP8JAAAWBAAA8gMAAMYNAADMCwAAOQ0AAJQNAAAyCwAA7gYAAKoAAAAgBAAAkAoAALMKAAA3DAAA0AgAANUKAAA9BwAA1A8AAPQKAAAdDQAA3gkAAHgKAAA0AwAA2gsAAP8DAAAiAAAAqQUAAJkCAACgCwAAkggAABwIAADsBQAAiAAAAAEAAAAMAQAA2QAAADEEAACRAAAAaAUAAHkJAAClAAAAKwEAAMQNAADuCgAA4QsAAAwDAADeDQAA0wkAAPsLAACyDAAATwYAAKQKAAADDAAAWgkAAP8KAAAYCQAA9AQAAPgAAAAiBAAApgsAAO4CAAA9AgAA9gwAAMAOAAAHAwAA9gQAADgAAACaDgAA/wAAAAAAAAPoFAAD+BwAABAYAAJAAAAAhCwAAqgMAAHcIAAC0CAAA5gwAAKwFAACyDAAAnQMAAAAAAAC9BAAA5QAAALQKAAAFBAAA3QUAAFgKAAAADQAAAPwFAAD3DQAAJgIAAAAIAAD2DAAApQwAABQEAAAyCAAA5QkAACEAAAAAAAAAXAQAAOADAAA2CAAAHAAAAEQFAAA1CgAA3AIAAPcIAAD1BwAAQggAAAgKAAAACQAAABsBAAAAAAAAAAAAAMcAAAAAAAAA/wAAACgNAAA2AwAA3AMAAIELAAAZAAAALAMAAMgAAADmBQAAjwoAAPkJAADLCQAA+AgAANwFAADhBQAA9gUAANwFAADkBgAA+wAAAGgEAAAAAAAAAHcKAAAAAAAAAAAHAAAAAAAAAAYAAAASBwAAwAMAAAEAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAACaAAAA8AcAAFsAAADICQAAIgAAANgAAAAXAAAAAAAAAADtBAAA7wEAAHsEAAAUAAAAgAwAAP4HAAAHAwAA/wkAABoFAADlBQAA6gAAAKoCAAByCgAAcAwAAPkDAADrAwAA+wAAAPALAAAfAwAA7QQAADwIAADuBgAAIgAAAAMHAADsDwAA4w4AAL0KAAAcCwAAfQsAANMIAAAwAgAAIgIAADAAAADsCAAAEAIAAA4FAAD0CwAAQQUAAEMKAAC+BgAA6wQAAPwCAAAAAAAASAcAAMgHAAAAKAAAADgDAADvAwAAuAEAAAEAAAAlAwAA+AUAAAYAAAAMAAAADwUAAJgCAAAAAAAAAAAAAAAAAAAAAAAcAAAAzAwAAPYAAACOAAAA7goAAPcFAADmCgAAiAwAABIEAAAAAAACAAD+DwAAhAsAABgAAAAVAAAAEAAAACgAAAD6AAAAugYAAGgEAAAAAAABAAAAAAAAAMwAAACICgAA3QkAAPQLAAA4BAAAFQAAAAwAAAA2AwAAoQoAAPgAAAADAAAAIAAAABAAAAA+AAAA/gAAAIwNAADECwAA5gkAADQDAADXCAAAJgAAAKgBAAAACwAAkAYAAAAAAADKAAAAyQAAAJoAAACoAAAAQgoAAAEAAADQAAAAaQAAABYAAAASBgAAfAsAAHQEAAAAAAAAAIAFAADaCwAA4AwAAEMAAADcDAAAyAwAABIAAAAhAQAAzQAAANYAAADvBAAApAkAAPgDAABCAgAASwcAAGQAAACnAQAAjAoAAAYAAAAIAAAAIgAAAPMKAADpAwAAwgoAAKYBAADuAwAA+QYAALkAAAB+BQAAYAUAAKMAAAD4AQAALAgAAPwBAADdDAAA2wIAAP8AAACuAQAA1AQAAP4IAACdAwAAaAAAAA8AAAA0AgAAywwAANYEAADQBgAAngsAAKABAAAAAQAAACYDAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
+        const successSound = new Audio("data:audio/wav;base64,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");
+        const errorSound = new Audio("data:audio/wav;base64,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");
+        
         // --- Auth Functions ---
         function showAuthScreen(isFirstTime) {
             onboardingScreen.style.display = 'none';
             authScreen.style.display = 'flex';
             if (isFirstTime) {
-                authTitle.innerText = 'إنشاء كلمة مرور أساسية';
+                authTitle.innerText = translations[currentLang].createMasterPassword;
                 passwordAuthForm.style.display = 'block';
                 questionsAuthForm.style.display = 'none';
                 authLoginBtn.style.display = 'none';
-                changePasswordLink.style.display = 'none';
                 authPasswordInput.value = '';
-                authPasswordInput.setAttribute('placeholder', 'أرقام ورموز فقط');
+                authPasswordInput.setAttribute('placeholder', translations[currentLang].masterPasswordPlaceholder);
                 authPasswordInput.focus();
                 authPasswordStrengthBar.style.display = 'block';
             } else {
                 const isMaxSecurity = localStorage.getItem('maxSecurity') === 'true';
                 if (isMaxSecurity) {
-                    authTitle.innerText = 'التحقق من الهوية';
+                    authTitle.innerText = translations[currentLang].securityCheck;
                     passwordAuthForm.style.display = 'none';
                     questionsAuthForm.style.display = 'block';
                     currentQuestionIndex = 0;
                     showNextQuestion();
                     authMessage.innerText = '';
                 } else {
-                    authTitle.innerText = 'تسجيل الدخول';
+                    authTitle.innerText = translations[currentLang].login;
                     passwordAuthForm.style.display = 'block';
                     questionsAuthForm.style.display = 'none';
                     authLoginBtn.style.display = 'block';
-                    changePasswordLink.style.display = 'block';
                     authPasswordInput.value = '';
-                    authPasswordInput.setAttribute('placeholder', 'كلمة المرور الأساسية');
+                    authPasswordInput.setAttribute('placeholder', translations[currentLang].masterPasswordLoginPlaceholder);
                     authPasswordStrengthBar.style.display = 'none';
                 }
             }
         }
+        
+        function updateUIForLanguage() {
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = currentLang;
+            
+            // Onboarding Screen
+            onboardingScreen.querySelector('h1').innerText = translations[currentLang].welcome;
+            onboardingText.innerText = translations[currentLang].securePasswordManager;
+            startBtn.innerText = translations[currentLang].startNow;
+
+            // Auth Screen
+            authPasswordInput.setAttribute('placeholder', translations[currentLang].masterPasswordPlaceholder);
+            authLoginBtn.innerText = translations[currentLang].login;
+            questionsNextBtn.innerText = translations[currentLang].next;
+            
+            // Main App
+            mainTitle.innerText = translations[currentLang].appTitle;
+            settingsPanel.querySelector('h2').innerText = translations[currentLang].settings;
+            settingsPanel.querySelector('#max-security-text').innerText = translations[currentLang].maxSecurity;
+            settingsPanel.querySelector('#lang-text').innerText = translations[currentLang].langText;
+            settingsPanel.querySelector('#lang-btn-text').innerText = translations[currentLang].langButtonText;
+            settingsPanel.querySelector('#change-master-password-btn').innerText = translations[currentLang].changeMasterPassword;
+            settingsPanel.querySelector('#export-btn-text').innerText = translations[currentLang].exportBtnText;
+            settingsPanel.querySelector('#import-btn-text').innerText = translations[currentLang].importBtnText;
+            logoutBtn.querySelector('span').innerText = translations[currentLang].logout;
+            
+            addEditForm.querySelector('h2').innerText = translations[currentLang].addAccount;
+            addEditForm.querySelector('#account-name-label').innerText = translations[currentLang].accountName;
+            addEditForm.querySelector('#account-name').placeholder = translations[currentLang].addAccountPlaceholder;
+            addEditForm.querySelector('#password-value-label').innerText = translations[currentLang].passwordValue;
+            addEditForm.querySelector('#password-value').placeholder = translations[currentLang].passwordPlaceholder;
+            generatePasswordBtn.innerText = translations[currentLang].generatePassword;
+            saveBtn.innerText = translations[currentLang].save;
+            cancelBtn.innerText = translations[currentLang].cancel;
+            
+            searchInput.placeholder = translations[currentLang].searchPlaceholder;
+
+            // Update rendered accounts
+            renderAccounts(accounts.filter(acc => acc.email.toLowerCase().includes(searchInput.value.toLowerCase())));
+            
+            // Update auth screen if visible
+            if (authScreen.style.display !== 'none') {
+                 showAuthScreen(localStorage.getItem('masterPassword') === null);
+            }
+        }
+
 
         function validatePassword(password) {
             const regex = /^[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
@@ -717,10 +891,14 @@ ZXCASDQWE123000/*
         }
 
         function getPasswordStrength(password) {
-            if (password.length < 6) return 0;
-            if (!validatePassword(password)) return 0;
-            if (password.length < 8) return 1;
-            if (password.length < 12) return 2;
+            const length = password.length;
+            const hasNumbers = /[0-9]/.test(password);
+            const hasSymbols = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
+
+            if (length < 6) return 0;
+            if (!hasNumbers || !hasSymbols) return 1;
+            if (length < 8) return 1;
+            if (length < 12) return 2;
             return 3;
         }
 
@@ -740,9 +918,9 @@ ZXCASDQWE123000/*
                 questionLabel.innerText = securityQuestions[currentQuestionIndex].question;
                 questionInput.value = '';
                 questionInput.focus();
-                questionsNextBtn.innerText = 'التالي';
+                questionsNextBtn.innerText = translations[currentLang].next;
                 if (currentQuestionIndex === securityQuestions.length - 1) {
-                    questionsNextBtn.innerText = 'تأكيد';
+                    questionsNextBtn.innerText = translations[currentLang].confirm;
                 }
             }
         }
@@ -795,7 +973,7 @@ ZXCASDQWE123000/*
             if (filteredAccounts.length === 0) {
                 const emptyState = document.createElement('p');
                 emptyState.className = 'text-center text-gray-400 mt-8';
-                emptyState.innerText = 'لا يوجد حسابات تطابق البحث.';
+                emptyState.innerText = translations[currentLang].noResults;
                 accountListEl.appendChild(emptyState);
                 return;
             }
@@ -809,20 +987,20 @@ ZXCASDQWE123000/*
                             <h2>${account.email}</h2>
                         </div>
                         <div class="account-actions">
-                            <button class="edit-btn" data-id="${account.id}" title="تعديل">
+                            <button class="edit-btn" data-id="${account.id}" title="${translations[currentLang].editAccount}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             </button>
-                            <button class="delete-btn" data-id="${account.id}" title="حذف">
+                            <button class="delete-btn" data-id="${account.id}" title="${translations[currentLang].confirmOk}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                             </button>
                         </div>
                     </div>
                     <div class="password-container">
                         <input type="password" value="${account.password}" readonly>
-                        <button class="toggle-btn">
+                        <button class="toggle-btn" title="Toggle visibility">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </button>
-                        <button class="copy-btn" data-id="${account.id}" title="نسخ">
+                        <button class="copy-btn" data-id="${account.id}" title="${translations[currentLang].copy}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </button>
                     </div>
@@ -839,11 +1017,19 @@ ZXCASDQWE123000/*
                 showAuthScreen(true);
             }
         });
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            localStorage.setItem('lang', currentLang);
+            updateUIForLanguage();
+        });
         
         // Password Input Listeners for validation
         authPasswordInput.addEventListener('input', () => {
-            const strength = getPasswordStrength(authPasswordInput.value);
-            updatePasswordStrengthBar(strength, authPasswordStrengthBar);
+            if (localStorage.getItem('masterPassword') === null) {
+                const strength = getPasswordStrength(authPasswordInput.value);
+                updatePasswordStrengthBar(strength, authPasswordStrengthBar);
+            }
         });
 
         authPasswordInput.addEventListener('keypress', (e) => {
@@ -854,7 +1040,7 @@ ZXCASDQWE123000/*
                         showMainApp();
                         playSound('success');
                     } else {
-                        authMessage.innerText = 'كلمة المرور غير صحيحة!';
+                        authMessage.innerText = translations[currentLang].wrongPassword;
                         authMessage.className = 'modal-message error';
                         playSound('error');
                     }
@@ -862,12 +1048,12 @@ ZXCASDQWE123000/*
                     // First time setup
                     const newPassword = authPasswordInput.value;
                     const strength = getPasswordStrength(newPassword);
-                    if (strength > 0) {
+                    if (strength >= 2) { // Allow medium or strong password
                         localStorage.setItem('masterPassword', newPassword);
                         showMainApp();
                         playSound('success');
                     } else {
-                        authMessage.innerText = 'كلمة المرور يجب أن تكون أرقام ورموز فقط و لا تقل عن 6 أحرف!';
+                        authMessage.innerText = translations[currentLang].masterPasswordInvalid;
                         authMessage.className = 'modal-message error';
                         playSound('error');
                     }
@@ -880,14 +1066,17 @@ ZXCASDQWE123000/*
                 showMainApp();
                 playSound('success');
             } else {
-                authMessage.innerText = 'كلمة المرور غير صحيحة!';
+                authMessage.innerText = translations[currentLang].wrongPassword;
                 authMessage.className = 'modal-message error';
                 playSound('error');
             }
         });
         
         questionsNextBtn.addEventListener('click', () => {
-            if (questionInput.value.trim().toLowerCase() === securityQuestions[currentQuestionIndex].answer.toLowerCase()) {
+            const currentAnswer = questionInput.value.trim().toLowerCase();
+            const correctAnswers = securityQuestions[currentQuestionIndex].answer.map(ans => ans.toLowerCase());
+
+            if (correctAnswers.includes(currentAnswer)) {
                 currentQuestionIndex++;
                 if (currentQuestionIndex < securityQuestions.length) {
                     showNextQuestion();
@@ -896,12 +1085,12 @@ ZXCASDQWE123000/*
                     playSound('success');
                 }
             } else {
-                authMessage.innerText = 'الإجابة خاطئة!';
+                authMessage.innerText = translations[currentLang].wrongAnswer;
                 authMessage.className = 'modal-message error';
                 playSound('error');
                 authAttempts++;
                 if (authAttempts >= 3) {
-                    authMessage.innerText = 'تم الوصول للحد الأقصى من المحاولات.';
+                    authMessage.innerText = translations[currentLang].maxAttemptsReached;
                     questionsNextBtn.disabled = true;
                 }
             }
@@ -914,7 +1103,7 @@ ZXCASDQWE123000/*
 
         addBtn.addEventListener('click', () => {
             editingId = null;
-            formTitle.innerText = 'إضافة حساب جديد';
+            formTitle.innerText = translations[currentLang].addAccount;
             accountNameInput.value = '';
             passwordValueInput.value = '';
             addEditForm.style.display = 'block';
@@ -953,15 +1142,16 @@ ZXCASDQWE123000/*
             const id = parseInt(target.dataset.id);
 
             if (target.classList.contains('delete-btn')) {
-                showCustomConfirm('تأكيد الحذف', 'هل أنت متأكد من حذف هذا الحساب؟').then((result) => {
+                showCustomConfirm(translations[currentLang].confirmTitle, translations[currentLang].confirmMessage).then((result) => {
                     if (result) {
                         const accountIndex = accounts.findIndex(acc => acc.id === id);
                         if (accountIndex !== -1 && accounts[accountIndex].email !== 'Warden.zone.contact@gmail.com') {
                             accounts.splice(accountIndex, 1);
                             renderAccounts(accounts);
+                            alert(translations[currentLang].accountDeleted);
                             playSound('success');
                         } else {
-                            alert('لا يمكنك حذف الحساب الأساسي.');
+                            alert(translations[currentLang].primaryAccountWarning);
                             playSound('error');
                         }
                     }
@@ -970,7 +1160,7 @@ ZXCASDQWE123000/*
                 const accountToEdit = accounts.find(acc => acc.id === id);
                 if (accountToEdit) {
                     editingId = id;
-                    formTitle.innerText = 'تعديل الحساب';
+                    formTitle.innerText = translations[currentLang].editAccount;
                     accountNameInput.value = accountToEdit.email;
                     passwordValueInput.value = accountToEdit.password;
                     addEditForm.style.display = 'block';
@@ -979,7 +1169,7 @@ ZXCASDQWE123000/*
             } else if (target.classList.contains('copy-btn')) {
                 const passwordText = target.parentElement.querySelector('input').value;
                 navigator.clipboard.writeText(passwordText).then(() => {
-                    alert('تم نسخ كلمة المرور!');
+                    alert(translations[currentLang].passwordCopied);
                     playSound('success');
                 });
             } else if (target.classList.contains('toggle-btn')) {
@@ -1000,7 +1190,7 @@ ZXCASDQWE123000/*
         });
 
         changeMasterPasswordBtn.addEventListener('click', () => {
-            showCustomConfirm('تغيير كلمة المرور', 'هل أنت متأكد من تغيير كلمة المرور الأساسية؟').then((result) => {
+            showCustomConfirm(translations[currentLang].confirmTitle, translations[currentLang].changePasswordConfirm).then((result) => {
                 if (result) {
                     localStorage.removeItem('masterPassword');
                     location.reload();
@@ -1018,6 +1208,7 @@ ZXCASDQWE123000/*
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+            alert(translations[currentLang].exportedSuccessfully);
             playSound('success');
         });
 
@@ -1035,19 +1226,27 @@ ZXCASDQWE123000/*
                         if (Array.isArray(importedAccounts)) {
                             accounts = importedAccounts;
                             renderAccounts(accounts);
-                            alert('تم استيراد الحسابات بنجاح!');
+                            alert(translations[currentLang].importedSuccessfully);
                             playSound('success');
                         } else {
-                            alert('صيغة الملف غير صحيحة.');
+                            alert(translations[currentLang].importError);
                             playSound('error');
                         }
                     } catch (err) {
-                        alert('حدث خطأ في قراءة الملف.');
+                        alert(translations[currentLang].fileReadError);
                         playSound('error');
                     }
                 };
                 reader.readAsText(file);
             }
+        });
+        
+        logoutBtn.addEventListener('click', () => {
+            showCustomConfirm(translations[currentLang].confirmTitle, translations[currentLang].logoutConfirm).then((result) => {
+                if(result) {
+                    location.reload();
+                }
+            });
         });
 
         searchInput.addEventListener('input', (e) => {
@@ -1070,20 +1269,17 @@ ZXCASDQWE123000/*
             }
             passwordValueInput.value = newPassword;
             updatePasswordStrengthBar(getPasswordStrength(newPassword), passwordStrengthBar);
-            alert('تم توليد كلمة مرور قوية!');
+            alert(translations[currentLang].strongPasswordGenerated);
             playSound('success');
         });
 
         // --- Initial App Load Logic ---
         const hasMasterPassword = !!localStorage.getItem('masterPassword');
-        const isMaxSecurity = localStorage.getItem('maxSecurity') === 'true';
+        
+        updateUIForLanguage();
 
         if (hasMasterPassword) {
-            if (isMaxSecurity) {
-                showAuthScreen(false);
-            } else {
-                showAuthScreen(false);
-            }
+            showAuthScreen(false);
         } else {
             showAuthScreen(true);
         }
