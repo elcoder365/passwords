@@ -14,6 +14,9 @@
             --accent-hover: #7c3aed;
             --border-color: #334155;
             --font-family: 'Cairo', sans-serif;
+            --success-color: #4ade80;
+            --error-color: #f87171;
+            --warning-color: #facc15;
         }
 
         body {
@@ -26,13 +29,25 @@
             min-height: 100vh;
             margin: 0;
             direction: rtl;
+            transition: background-color 0.5s ease;
         }
-
+        
+        /* General Containers */
         .container {
             width: 100%;
             max-width: 800px;
             padding: 2rem;
             animation: fadeIn 1s ease-in-out;
+        }
+        
+        .onboarding-container, .auth-container, .security-questions-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         @keyframes fadeIn {
@@ -54,6 +69,10 @@
             font-weight: 700;
             color: var(--text-color);
             text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+        }
+        
+        .header .btn-primary {
+            min-width: 120px;
         }
 
         .icon-btn {
@@ -112,6 +131,12 @@
             align-items: center;
             flex-wrap: wrap;
         }
+        
+        .account-details {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
         .account-info h2 {
             margin: 0;
@@ -137,7 +162,8 @@
             color: var(--accent-color);
         }
 
-        .password {
+        .password-container {
+            position: relative;
             background-color: #0f172a;
             padding: 0.75rem 1rem;
             border-radius: 0.75rem;
@@ -147,8 +173,28 @@
             font-family: monospace;
             font-size: 1rem;
         }
-
-        .password .copy-btn {
+        
+        .password-container input {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-family: monospace;
+            font-size: 1rem;
+            flex-grow: 1;
+            outline: none;
+        }
+        
+        .password-container .toggle-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .password-container .copy-btn {
             background: none;
             border: none;
             color: var(--text-color);
@@ -156,9 +202,9 @@
             cursor: pointer;
             transition: color 0.3s;
         }
-
-        .password .copy-btn:hover {
-            color: #4ade80; /* Green for success */
+        
+        .password-container .copy-btn:hover {
+            color: var(--success-color);
         }
 
         .form-container {
@@ -178,6 +224,7 @@
 
         .form-group {
             margin-bottom: 1rem;
+            text-align: right;
         }
 
         .form-group label {
@@ -200,6 +247,19 @@
             outline: none;
             border-color: var(--accent-color);
         }
+        
+        .password-strength-bar {
+            height: 5px;
+            background-color: #444;
+            border-radius: 5px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar div {
+            height: 100%;
+            transition: width 0.3s, background-color 0.3s;
+        }
 
         .form-actions {
             display: flex;
@@ -213,6 +273,16 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .btn-xl {
+            padding: 1rem 3rem;
+            font-size: 1.25rem;
         }
 
         .btn-primary {
@@ -234,8 +304,69 @@
         .btn-secondary:hover {
             background-color: #475569;
         }
+        
+        .management-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .management-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.5rem;
+        }
 
-        /* Biometric Modal */
+        .biometric-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .biometric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-color);
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            padding-right: 3rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .search-container svg {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -249,7 +380,6 @@
             z-index: 1000;
             backdrop-filter: blur(5px);
         }
-
         .modal-content {
             background: linear-gradient(135deg, #1e293b, #111827);
             padding: 2rem;
@@ -261,52 +391,86 @@
             animation: modalFadeIn 0.5s ease-in-out;
             border: 1px solid var(--border-color);
         }
-
         @keyframes modalFadeIn {
             from { opacity: 0; transform: scale(0.8); }
             to { opacity: 1; transform: scale(1); }
         }
-
-        .modal-icon {
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .modal-text {
-            color: #94a3b8;
-        }
-
-        .modal-btn {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 1.5rem;
-        }
-
-        .modal-btn:hover {
-            background-color: var(--accent-hover);
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-        }
-
         .modal-message {
             margin-top: 1rem;
             font-weight: bold;
         }
-        .modal-message.success { color: #4ade80; }
-        .modal-message.error { color: #f87171; }
+        .modal-message.success { color: var(--success-color); }
+        .modal-message.error { color: var(--error-color); }
+        .modal-message.info { color: var(--warning-color); }
+
+        /* Security Questions Modal */
+        .questions-modal .form-group input {
+            text-align: center;
+        }
+        
+        /* Confirmation Modal */
+        .confirm-modal .modal-content {
+            padding: 1.5rem;
+        }
+        .confirm-modal .modal-content h3 {
+            margin: 0 0 1rem;
+            font-size: 1.25rem;
+        }
+        .confirm-modal .modal-actions {
+            justify-content: center;
+        }
+
+        /* Settings Toggle Switch */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Onboarding Styles */
+        .onboarding-container {
+            animation: fadeIn 1s ease-in-out;
+        }
 
         /* Responsive adjustments */
         @media (max-width: 600px) {
@@ -326,23 +490,82 @@
 </head>
 <body>
 
-<div class="modal-overlay" id="biometric-modal">
-    <div class="modal-content">
-        <div class="modal-icon" id="biometric-icon">
-            <!-- Icon will be set by JS -->
+<!-- Onboarding Screen (Initial View) -->
+<div class="onboarding-container" id="onboarding-screen">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">أهلاً بك</h1>
+    <p class="modal-text" style="font-size: 1.25rem; margin-bottom: 2rem;">مدير كلمات المرور الآمن.</p>
+    <button class="btn btn-primary btn-xl" id="start-btn">ابدأ الآن</button>
+</div>
+
+<!-- Authentication Screen (Password/Security Questions) -->
+<div class="auth-container" id="auth-screen" style="display:none;">
+    <div class="form-container" style="width: 100%; max-width: 400px; padding: 2rem;">
+        <h2 id="auth-title"></h2>
+        <div id="password-auth-form" style="display: none;">
+            <div class="form-group">
+                <input type="password" id="auth-password-input" placeholder="كلمة المرور" autofocus>
+                <div class="password-strength-bar" id="auth-password-strength-bar" style="display:none;">
+                    <div></div>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="auth-login-btn">تسجيل الدخول</button>
+            <button class="btn btn-secondary" id="change-password-link">تغيير كلمة المرور</button>
         </div>
-        <h2 id="modal-title"></h2>
-        <p class="modal-text" id="modal-description"></p>
-        <button class="modal-btn" id="modal-action-btn"></button>
-        <div class="modal-message" id="modal-message"></div>
+        <div id="questions-auth-form" style="display: none;">
+            <div class="form-group">
+                <label id="question-label" for="question-input"></label>
+                <input type="text" id="question-input" placeholder="الإجابة" autofocus>
+            </div>
+            <button class="btn btn-primary" id="questions-next-btn">التالي</button>
+        </div>
+        <p class="modal-message" id="auth-message"></p>
     </div>
 </div>
 
+<!-- Confirmation Modal (Custom alert/confirm) -->
+<div class="modal-overlay confirm-modal" id="confirm-modal" style="display: none;">
+    <div class="modal-content">
+        <h3 id="confirm-title">هل أنت متأكد؟</h3>
+        <p class="modal-text" id="confirm-message">هذا الإجراء لا يمكن التراجع عنه.</p>
+        <div class="form-actions" style="margin-top: 20px;">
+            <button class="btn btn-secondary" id="confirm-cancel">إلغاء</button>
+            <button class="btn btn-primary" id="confirm-ok">تأكيد</button>
+        </div>
+    </div>
+</div>
+
+<!-- Main App (Hidden by default) -->
 <div class="container" id="main-app" style="display: none;">
     <div class="header">
         <h1>مدير الحسابات</h1>
-        <button class="icon-btn" id="add-btn">
-            +
+        <div style="display: flex; gap: 10px;">
+             <button class="btn btn-primary" id="settings-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83l-2.83 2.83a2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0l-2.83-2.83a2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83l2.83-2.83a2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0l2.83 2.83a2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0 .33 1.82z"></path></svg>
+            </button>
+             <button class="icon-btn" id="add-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+        </div>
+    </div>
+    
+    <div id="settings-panel" class="form-container" style="display: none;">
+        <h2>الإعدادات</h2>
+        <div class="switch-container">
+            <span>تفعيل الحماية القصوى (الأسئلة السرية)</span>
+            <label class="switch">
+                <input type="checkbox" id="max-security-toggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <button class="btn btn-secondary" id="change-master-password-btn" style="width: 100%;">تغيير كلمة المرور الأساسية</button>
+        <button class="btn btn-secondary" id="export-btn" style="width: 100%; margin-top: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            تصدير الحسابات (JSON)
+        </button>
+        <input type="file" id="import-input" style="display:none;" accept=".json" />
+        <button class="btn btn-secondary" id="import-btn" style="width: 100%; margin-top: 10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            استيراد الحسابات (JSON)
         </button>
     </div>
 
@@ -354,12 +577,24 @@
         </div>
         <div class="form-group">
             <label for="password-value">كلمة المرور:</label>
-            <input type="text" id="password-value" placeholder="كلمة المرور">
+            <div style="position: relative;">
+                <input type="password" id="password-value" placeholder="كلمة المرور">
+                <div class="password-strength-bar" id="password-strength-bar"><div></div></div>
+                <button class="toggle-btn" id="toggle-password-btn" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                </button>
+            </div>
+            <button class="btn btn-secondary" id="generate-password-btn" style="width: 100%; margin-top: 10px;">توليد كلمة مرور قوية</button>
         </div>
         <div class="form-actions">
             <button class="btn btn-primary" id="save-btn">حفظ</button>
             <button class="btn btn-secondary" id="cancel-btn">إلغاء</button>
         </div>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="البحث عن حساب...">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
     </div>
 
     <div class="account-list" id="account-list">
@@ -382,21 +617,33 @@ contact.us.new.music@gmail.com
 
 ZXCASDQWE123000/*
 `;
-
+        
         // --- Core Application State ---
         let accounts = [];
         let editingId = null;
-        let savedCredentialId = localStorage.getItem('biometricCredentialId');
-        let initialSetupDone = false;
+        const securityQuestions = [
+            { question: "ما هو اسمك؟", answer: "سيف الدين" },
+            { question: "ما هو حلمك؟", answer: "مهندس كمبيوتر" },
+            { question: "ما هي أول مدرسة لك؟", answer: "الاندلس" }
+        ];
+        let currentQuestionIndex = 0;
+        let authAttempts = 0;
 
         // --- DOM Elements ---
+        const onboardingScreen = document.getElementById('onboarding-screen');
+        const startBtn = document.getElementById('start-btn');
+        const authScreen = document.getElementById('auth-screen');
         const mainApp = document.getElementById('main-app');
-        const biometricModal = document.getElementById('biometric-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDescription = document.getElementById('modal-description');
-        const modalActionBtn = document.getElementById('modal-action-btn');
-        const biometricIcon = document.getElementById('biometric-icon');
-        const modalMessage = document.getElementById('modal-message');
+        const authTitle = document.getElementById('auth-title');
+        const passwordAuthForm = document.getElementById('password-auth-form');
+        const authPasswordInput = document.getElementById('auth-password-input');
+        const authLoginBtn = document.getElementById('auth-login-btn');
+        const questionsAuthForm = document.getElementById('questions-auth-form');
+        const questionLabel = document.getElementById('question-label');
+        const questionInput = document.getElementById('question-input');
+        const questionsNextBtn = document.getElementById('questions-next-btn');
+        const authMessage = document.getElementById('auth-message');
+        const changePasswordLink = document.getElementById('change-password-link');
         const accountListEl = document.getElementById('account-list');
         const addBtn = document.getElementById('add-btn');
         const addEditForm = document.getElementById('add-edit-form');
@@ -405,8 +652,132 @@ ZXCASDQWE123000/*
         const passwordValueInput = document.getElementById('password-value');
         const saveBtn = document.getElementById('save-btn');
         const cancelBtn = document.getElementById('cancel-btn');
+        const settingsBtn = document.getElementById('settings-btn');
+        const settingsPanel = document.getElementById('settings-panel');
+        const maxSecurityToggle = document.getElementById('max-security-toggle');
+        const changeMasterPasswordBtn = document.getElementById('change-master-password-btn');
+        const exportBtn = document.getElementById('export-btn');
+        const importBtn = document.getElementById('import-btn');
+        const importInput = document.getElementById('import-input');
+        const searchInput = document.getElementById('search-input');
+        const passwordStrengthBar = document.getElementById('password-strength-bar');
+        const authPasswordStrengthBar = document.getElementById('auth-password-strength-bar');
+        const togglePasswordBtn = document.getElementById('toggle-password-btn');
+        
+        // Custom Confirmation Modal
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmTitle = document.getElementById('confirm-title');
+        const confirmMessage = document.getElementById('confirm-message');
+        const confirmCancel = document.getElementById('confirm-cancel');
+        const confirmOk = document.getElementById('confirm-ok');
+        
+        // Sound Effects
+        const successSound = new Audio("data:audio/wav;base64,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");
+        const errorSound = new Audio("data:audio/wav;base64,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");
 
-        // --- Helper Functions ---
+        // --- Auth Functions ---
+        function showAuthScreen(isFirstTime) {
+            onboardingScreen.style.display = 'none';
+            authScreen.style.display = 'flex';
+            if (isFirstTime) {
+                authTitle.innerText = 'إنشاء كلمة مرور أساسية';
+                passwordAuthForm.style.display = 'block';
+                questionsAuthForm.style.display = 'none';
+                authLoginBtn.style.display = 'none';
+                changePasswordLink.style.display = 'none';
+                authPasswordInput.value = '';
+                authPasswordInput.setAttribute('placeholder', 'أرقام ورموز فقط');
+                authPasswordInput.focus();
+                authPasswordStrengthBar.style.display = 'block';
+            } else {
+                const isMaxSecurity = localStorage.getItem('maxSecurity') === 'true';
+                if (isMaxSecurity) {
+                    authTitle.innerText = 'التحقق من الهوية';
+                    passwordAuthForm.style.display = 'none';
+                    questionsAuthForm.style.display = 'block';
+                    currentQuestionIndex = 0;
+                    showNextQuestion();
+                    authMessage.innerText = '';
+                } else {
+                    authTitle.innerText = 'تسجيل الدخول';
+                    passwordAuthForm.style.display = 'block';
+                    questionsAuthForm.style.display = 'none';
+                    authLoginBtn.style.display = 'block';
+                    changePasswordLink.style.display = 'block';
+                    authPasswordInput.value = '';
+                    authPasswordInput.setAttribute('placeholder', 'كلمة المرور الأساسية');
+                    authPasswordStrengthBar.style.display = 'none';
+                }
+            }
+        }
+
+        function validatePassword(password) {
+            const regex = /^[0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
+            return regex.test(password);
+        }
+
+        function getPasswordStrength(password) {
+            if (password.length < 6) return 0;
+            if (!validatePassword(password)) return 0;
+            if (password.length < 8) return 1;
+            if (password.length < 12) return 2;
+            return 3;
+        }
+
+        function updatePasswordStrengthBar(strength, barEl) {
+            const bar = barEl.querySelector('div');
+            let width = 0;
+            let color = 'red';
+            if (strength === 1) { width = 25; color = 'red'; }
+            if (strength === 2) { width = 50; color = 'orange'; }
+            if (strength === 3) { width = 100; color = 'var(--success-color)'; }
+            bar.style.width = `${width}%`;
+            bar.style.backgroundColor = color;
+        }
+
+        function showNextQuestion() {
+            if (currentQuestionIndex < securityQuestions.length) {
+                questionLabel.innerText = securityQuestions[currentQuestionIndex].question;
+                questionInput.value = '';
+                questionInput.focus();
+                questionsNextBtn.innerText = 'التالي';
+                if (currentQuestionIndex === securityQuestions.length - 1) {
+                    questionsNextBtn.innerText = 'تأكيد';
+                }
+            }
+        }
+
+        function playSound(type) {
+            if (type === 'success') successSound.play();
+            if (type === 'error') errorSound.play();
+        }
+
+        function showCustomConfirm(title, message) {
+            return new Promise((resolve) => {
+                confirmModal.style.display = 'flex';
+                confirmTitle.innerText = title;
+                confirmMessage.innerText = message;
+                confirmOk.onclick = () => {
+                    confirmModal.style.display = 'none';
+                    resolve(true);
+                };
+                confirmCancel.onclick = () => {
+                    confirmModal.style.display = 'none';
+                    resolve(false);
+                };
+            });
+        }
+        
+        // --- Core App Functions ---
+        function showMainApp() {
+            onboardingScreen.style.display = 'none';
+            authScreen.style.display = 'none';
+            mainApp.style.display = 'block';
+            accounts = parsePasswords();
+            renderAccounts(accounts);
+            maxSecurityToggle.checked = localStorage.getItem('maxSecurity') === 'true';
+        }
+
         function parsePasswords() {
             const lines = passwordFileContent.trim().split('\n');
             const passwordLine = lines.pop().trim();
@@ -419,127 +790,24 @@ ZXCASDQWE123000/*
             }));
         }
 
-        function base64UrlToBinary(base64Url) {
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-            return outputArray;
-        }
-
-        function binaryToBase64Url(binary) {
-            const rawData = String.fromCharCode(...binary);
-            return window.btoa(rawData).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-        }
-
-        // --- WebAuthn Functions ---
-        async function registerBiometric() {
-            try {
-                const credential = await navigator.credentials.create({
-                    publicKey: {
-                        challenge: new Uint8Array(32), // In production, this must be a unique, server-generated challenge.
-                        rp: { name: "مدير كلمات المرور الاحترافي" },
-                        user: {
-                            id: new Uint8Array(16),
-                            name: "user@passwords.com",
-                            displayName: "المستخدم الرئيسي"
-                        },
-                        pubKeyCredParams: [{ type: "public-key", alg: -7 }],
-                        authenticatorSelection: { authenticatorAttachment: "platform" },
-                        timeout: 60000,
-                        attestation: "direct"
-                    }
-                });
-
-                savedCredentialId = binaryToBase64Url(new Uint8Array(credential.rawId));
-                localStorage.setItem('biometricCredentialId', savedCredentialId);
-                console.log('Registered credential ID:', savedCredentialId);
-                modalMessage.innerText = 'تم تسجيل البصمة/الوجه بنجاح!';
-                modalMessage.className = 'modal-message success';
-                setTimeout(() => {
-                    biometricModal.style.display = 'none';
-                    mainApp.style.display = 'block';
-                    renderAccounts();
-                }, 1500);
-
-            } catch (err) {
-                console.error('Registration failed:', err);
-                modalMessage.innerText = 'فشل التسجيل. حاول مرة أخرى.';
-                modalMessage.className = 'modal-message error';
-            }
-        }
-
-        async function loginBiometric() {
-            try {
-                if (!savedCredentialId) {
-                    modalMessage.innerText = 'لا يوجد بصمة مسجلة. يرجى التسجيل أولاً.';
-                    modalMessage.className = 'modal-message error';
-                    return;
-                }
-
-                const assertion = await navigator.credentials.get({
-                    publicKey: {
-                        challenge: new Uint8Array(32), // In production, this must be a server-generated challenge.
-                        allowCredentials: [{
-                            type: "public-key",
-                            id: base64UrlToBinary(savedCredentialId)
-                        }],
-                        timeout: 60000
-                    }
-                });
-
-                console.log('Authentication successful.');
-                modalMessage.innerText = 'تم التحقق بنجاح!';
-                modalMessage.className = 'modal-message success';
-                setTimeout(() => {
-                    biometricModal.style.display = 'none';
-                    mainApp.style.display = 'block';
-                    renderAccounts();
-                }, 1500);
-
-            } catch (err) {
-                console.error('Authentication failed:', err);
-                modalMessage.innerText = 'فشل التحقق. حاول مرة أخرى.';
-                modalMessage.className = 'modal-message error';
-            }
-        }
-
-        // --- UI Logic ---
-        function showBiometricModal(isRegister) {
-            biometricModal.style.display = 'flex';
-            modalMessage.innerText = '';
-            
-            const isFaceID = window.innerWidth > 768; // Simple check for icon
-            const iconSvg = isFaceID ? 
-                `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>` : 
-                `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-fingerprint"><path d="M12 1a10 10 0 1 0 10 10v-1h-2v1a8 8 1 1 1-8-8H2v-1a10 10 0 0 0 10 10z"></path><path d="M12 21a9 9 1 1 1 0-18"></path><path d="M14 10a2 2 1 1 1-4 0v-1a2 2 1 1 1 4 0v1z"></path></svg>`;
-            
-            biometricIcon.innerHTML = iconSvg;
-            modalTitle.innerText = isRegister ? 'تسجيل بصمة/وجه' : 'التحقق للدخول';
-            modalDescription.innerText = isRegister ? 'لتسجيل الدخول بأمان، قم بتسجيل بصمة إصبعك أو وجهك.' : 'يرجى استخدام بصمتك أو وجهك للمتابعة.';
-            modalActionBtn.innerText = isRegister ? 'بدء التسجيل' : 'بدء التحقق';
-
-            modalActionBtn.onclick = isRegister ? registerBiometric : loginBiometric;
-        }
-
-        function renderAccounts() {
+        function renderAccounts(filteredAccounts) {
             accountListEl.innerHTML = '';
-            if (accounts.length === 0) {
+            if (filteredAccounts.length === 0) {
                 const emptyState = document.createElement('p');
                 emptyState.className = 'text-center text-gray-400 mt-8';
-                emptyState.innerText = 'لا يوجد حسابات حالياً. استخدم زر الإضافة لإضافة حساب جديد.';
+                emptyState.innerText = 'لا يوجد حسابات تطابق البحث.';
                 accountListEl.appendChild(emptyState);
                 return;
             }
             
-            accounts.forEach(account => {
+            filteredAccounts.forEach(account => {
                 const card = document.createElement('div');
                 card.className = 'account-card';
                 card.innerHTML = `
                     <div class="account-info">
-                        <h2>${account.email}</h2>
+                        <div class="account-details">
+                            <h2>${account.email}</h2>
+                        </div>
                         <div class="account-actions">
                             <button class="edit-btn" data-id="${account.id}" title="تعديل">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
@@ -549,18 +817,101 @@ ZXCASDQWE123000/*
                             </button>
                         </div>
                     </div>
-                    <div class="password">
-                        <span class="password-text">${account.password}</span>
+                    <div class="password-container">
+                        <input type="password" value="${account.password}" readonly>
+                        <button class="toggle-btn">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
                         <button class="copy-btn" data-id="${account.id}" title="نسخ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </button>
                     </div>
                 `;
                 accountListEl.appendChild(card);
             });
         }
+        
+        // --- Event Listeners ---
+        startBtn.addEventListener('click', () => {
+            if (localStorage.getItem('masterPassword')) {
+                showAuthScreen(false);
+            } else {
+                showAuthScreen(true);
+            }
+        });
+        
+        // Password Input Listeners for validation
+        authPasswordInput.addEventListener('input', () => {
+            const strength = getPasswordStrength(authPasswordInput.value);
+            updatePasswordStrengthBar(strength, authPasswordStrengthBar);
+        });
 
-        // --- Event Handlers ---
+        authPasswordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                if (localStorage.getItem('masterPassword')) {
+                    // Login
+                    if (authPasswordInput.value === localStorage.getItem('masterPassword')) {
+                        showMainApp();
+                        playSound('success');
+                    } else {
+                        authMessage.innerText = 'كلمة المرور غير صحيحة!';
+                        authMessage.className = 'modal-message error';
+                        playSound('error');
+                    }
+                } else {
+                    // First time setup
+                    const newPassword = authPasswordInput.value;
+                    const strength = getPasswordStrength(newPassword);
+                    if (strength > 0) {
+                        localStorage.setItem('masterPassword', newPassword);
+                        showMainApp();
+                        playSound('success');
+                    } else {
+                        authMessage.innerText = 'كلمة المرور يجب أن تكون أرقام ورموز فقط و لا تقل عن 6 أحرف!';
+                        authMessage.className = 'modal-message error';
+                        playSound('error');
+                    }
+                }
+            }
+        });
+
+        authLoginBtn.addEventListener('click', () => {
+            if (authPasswordInput.value === localStorage.getItem('masterPassword')) {
+                showMainApp();
+                playSound('success');
+            } else {
+                authMessage.innerText = 'كلمة المرور غير صحيحة!';
+                authMessage.className = 'modal-message error';
+                playSound('error');
+            }
+        });
+        
+        questionsNextBtn.addEventListener('click', () => {
+            if (questionInput.value.trim().toLowerCase() === securityQuestions[currentQuestionIndex].answer.toLowerCase()) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < securityQuestions.length) {
+                    showNextQuestion();
+                } else {
+                    showMainApp();
+                    playSound('success');
+                }
+            } else {
+                authMessage.innerText = 'الإجابة خاطئة!';
+                authMessage.className = 'modal-message error';
+                playSound('error');
+                authAttempts++;
+                if (authAttempts >= 3) {
+                    authMessage.innerText = 'تم الوصول للحد الأقصى من المحاولات.';
+                    questionsNextBtn.disabled = true;
+                }
+            }
+        });
+
+        // Main App Listeners
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.style.display = settingsPanel.style.display === 'none' ? 'block' : 'none';
+        });
+
         addBtn.addEventListener('click', () => {
             editingId = null;
             formTitle.innerText = 'إضافة حساب جديد';
@@ -588,9 +939,10 @@ ZXCASDQWE123000/*
                 } else {
                     accounts.unshift({ id: Date.now(), email, password });
                 }
-                renderAccounts();
+                renderAccounts(accounts);
                 addEditForm.style.display = 'none';
                 addBtn.style.display = 'block';
+                playSound('success');
             }
         });
 
@@ -601,14 +953,19 @@ ZXCASDQWE123000/*
             const id = parseInt(target.dataset.id);
 
             if (target.classList.contains('delete-btn')) {
-                // Cannot delete the primary login email
-                const accountIndex = accounts.findIndex(acc => acc.id === id);
-                if (accountIndex !== -1 && accounts[accountIndex].email !== 'Warden.zone.contact@gmail.com') {
-                    accounts.splice(accountIndex, 1);
-                    renderAccounts();
-                } else {
-                    alert('لا يمكنك حذف الحساب الأساسي.');
-                }
+                showCustomConfirm('تأكيد الحذف', 'هل أنت متأكد من حذف هذا الحساب؟').then((result) => {
+                    if (result) {
+                        const accountIndex = accounts.findIndex(acc => acc.id === id);
+                        if (accountIndex !== -1 && accounts[accountIndex].email !== 'Warden.zone.contact@gmail.com') {
+                            accounts.splice(accountIndex, 1);
+                            renderAccounts(accounts);
+                            playSound('success');
+                        } else {
+                            alert('لا يمكنك حذف الحساب الأساسي.');
+                            playSound('error');
+                        }
+                    }
+                });
             } else if (target.classList.contains('edit-btn')) {
                 const accountToEdit = accounts.find(acc => acc.id === id);
                 if (accountToEdit) {
@@ -620,21 +977,116 @@ ZXCASDQWE123000/*
                     addBtn.style.display = 'none';
                 }
             } else if (target.classList.contains('copy-btn')) {
-                const passwordText = target.parentElement.querySelector('.password-text').innerText;
+                const passwordText = target.parentElement.querySelector('input').value;
                 navigator.clipboard.writeText(passwordText).then(() => {
                     alert('تم نسخ كلمة المرور!');
+                    playSound('success');
                 });
+            } else if (target.classList.contains('toggle-btn')) {
+                const passwordInput = target.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    target.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A5 5 0 0 1 12 14.5c-1.89 0-3.69.87-4.94 2.39M9.4 9.4a3 3 0 1 0 5.23 5.23M1 1l22 22"></path></svg>`;
+                } else {
+                    passwordInput.type = 'password';
+                    target.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+                }
             }
         });
         
-        // --- Initial App Load ---
-        if (savedCredentialId) {
-            showBiometricModal(false); // Login
-        } else {
-            accounts = parsePasswords();
-            showBiometricModal(true); // Register
-        }
+        // Settings Listeners
+        maxSecurityToggle.addEventListener('change', (e) => {
+            localStorage.setItem('maxSecurity', e.target.checked);
+        });
 
+        changeMasterPasswordBtn.addEventListener('click', () => {
+            showCustomConfirm('تغيير كلمة المرور', 'هل أنت متأكد من تغيير كلمة المرور الأساسية؟').then((result) => {
+                if (result) {
+                    localStorage.removeItem('masterPassword');
+                    location.reload();
+                }
+            });
+        });
+
+        exportBtn.addEventListener('click', () => {
+            const data = JSON.stringify(accounts, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'passwords_export.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            playSound('success');
+        });
+
+        importBtn.addEventListener('click', () => {
+            importInput.click();
+        });
+
+        importInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const importedAccounts = JSON.parse(event.target.result);
+                        if (Array.isArray(importedAccounts)) {
+                            accounts = importedAccounts;
+                            renderAccounts(accounts);
+                            alert('تم استيراد الحسابات بنجاح!');
+                            playSound('success');
+                        } else {
+                            alert('صيغة الملف غير صحيحة.');
+                            playSound('error');
+                        }
+                    } catch (err) {
+                        alert('حدث خطأ في قراءة الملف.');
+                        playSound('error');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filteredAccounts = accounts.filter(acc => acc.email.toLowerCase().includes(query));
+            renderAccounts(filteredAccounts);
+        });
+
+        passwordValueInput.addEventListener('input', () => {
+            const strength = getPasswordStrength(passwordValueInput.value);
+            updatePasswordStrengthBar(strength, passwordStrengthBar);
+        });
+        
+        generatePasswordBtn.addEventListener('click', () => {
+            const length = 12;
+            const chars = '0123456789!@#$%^&*()_+-=[]{}|;:",.<>/?';
+            let newPassword = '';
+            for (let i = 0; i < length; i++) {
+                newPassword += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            passwordValueInput.value = newPassword;
+            updatePasswordStrengthBar(getPasswordStrength(newPassword), passwordStrengthBar);
+            alert('تم توليد كلمة مرور قوية!');
+            playSound('success');
+        });
+
+        // --- Initial App Load Logic ---
+        const hasMasterPassword = !!localStorage.getItem('masterPassword');
+        const isMaxSecurity = localStorage.getItem('maxSecurity') === 'true';
+
+        if (hasMasterPassword) {
+            if (isMaxSecurity) {
+                showAuthScreen(false);
+            } else {
+                showAuthScreen(false);
+            }
+        } else {
+            showAuthScreen(true);
+        }
     });
 </script>
 
